@@ -1,0 +1,22 @@
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+
+dotenv.config();
+
+const app = express();
+
+app.use(express.json());
+
+const MONGODB_URL = process.env.MONGO_URI;
+const port = process.env.PORT || 5000;
+
+app.listen(port, async () => {
+  console.log(`Server running on ${port}`);
+  try {
+    let conn = await mongoose.connect(MONGODB_URL);
+    console.log(`mongodb connected  : ${conn.connection.host}`);
+  } catch (error) {
+    console.log("Mongodb connection error:", error);
+  }
+});

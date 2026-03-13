@@ -4,6 +4,8 @@ export const createSubscription = async (req, res) => {
   try {
     const { name, price, billingCycle } = req.body;
 
+    console.log(req.user);
+
     const newSubscription = await Subscription.create({
       name,
       price,

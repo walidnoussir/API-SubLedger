@@ -11,7 +11,7 @@ const subscriptionSchema = new mongoose.Schema(
       required: true,
     },
     billingCycle: {
-      type: Date,
+      type: String,
       required: true,
     },
 

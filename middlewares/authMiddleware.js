@@ -1,5 +1,8 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const protectRoute = async (req, res, next) => {
   try {
@@ -25,12 +28,20 @@ export const protectRoute = async (req, res, next) => {
     }
 
     req.user = user;
+    req.userId = decoded.userId;
 
     next();
   } catch (error) {
     console.log("Error on protectRoute.", error);
     res.status(500).json({ message: "Internal server error" });
   }
+};
+
+export const requireAdmin = (req, res, next) => {
+  if (req.user?.role !== "admin") {
+    return res.status(403).json({ message: "Access denied - Admins only" });
+  }
+  next();
 };
 
 export const validateRole = async (req, res, next) => {
